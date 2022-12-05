@@ -1,10 +1,22 @@
 import './App.css';
-import data from "./data.json"
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function App() {
-  ///just needs event handlers for the create, edit and delete button and I believe we're done.
+  const [input, setInput] = useState()
 
-  const newData = data.map((books) => {
+  const getBooks = () => {
+    axios.get("http://localhost:4000/api/library/").then(response => {
+      setInput(response.data)
+      console.log(response.data)
+    })
+  }
+  useEffect(() => {
+    getBooks()
+  }, [])
+  if (input === undefined) return;
+
+  const newData = input.map((books) => {
     return (
       <div>
         <h1>{books.title}<button className='Buttons'>edit</button><button className='Buttons'>delete</button></h1>
