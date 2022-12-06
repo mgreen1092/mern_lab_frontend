@@ -10,10 +10,8 @@ const Homepage = (props) => {
   const getBooks = () => {
     axios.get("http://localhost:4000/api/library/").then(response => {
       props.setAllBooks(response.data)
-      console.log(response.data)
     })
   }
-  console.log(props.allBooks)
   useEffect(() => {
     getBooks()
   }, [])
@@ -21,13 +19,13 @@ const Homepage = (props) => {
   if (props.allBooks === undefined) return;
 
   const deleteHandler =  (bookId) => {
-    console.log(bookId)
-    const response =  axios.delete(`http://localhost:4000/api/library/delete/${bookId}`)
+    const response =  axios.delete(`http://localhost:4000/api/library/delete/${bookId}`).then(response => {
+      props.setAllBooks(response.data)
+    })
   }
   
 
   const newData = props.allBooks.map((books, key) => {
-    console.log(books._id)
     return (
       <div key={key}>
         <h1>{books.title}<Link to = {`/edit/${books._id}`}><button className='Buttons' id="edit" >edit</button></Link><button className='Buttons' onClick={() => deleteHandler (books._id)} >delete</button></h1>
