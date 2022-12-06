@@ -2,25 +2,35 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const Homepage = () => {
-    const [input, setInput] = useState()
+const deleteButton = document.getElementById('delete')
+const editButton = document.getElementById('edit')
+
+const Homepage = (props) => {
 
   const getBooks = () => {
     axios.get("http://localhost:4000/api/library/").then(response => {
-      setInput(response.data)
+      props.setAllBooks(response.data)
       console.log(response.data)
     })
   }
+  console.log(props.allBooks)
   useEffect(() => {
     getBooks()
   }, [])
 
-  if (input === undefined) return;
+  if (props.allBooks === undefined) return;
 
-  const newData = input.map((books) => {
+  const deleteHandler =  (bookId) => {
+    console.log(bookId)
+    const response =  axios.delete(`http://localhost:4000/api/library/delete/${bookId}`)
+  }
+  
+
+  const newData = props.allBooks.map((books, key) => {
+    console.log(books._id)
     return (
-      <div>
-        <h1>{books.title}<button className='Buttons'>edit</button><button className='Buttons'>delete</button></h1>
+      <div key={key}>
+        <h1>{books.title}<Link to = {`/edit/${books._id}`}><button className='Buttons' id="edit" >edit</button></Link><button className='Buttons' onClick={() => deleteHandler (books._id)} >delete</button></h1>
         <p>{books.author}</p>
         <p>{books.description}</p>
       </div>
@@ -31,5 +41,6 @@ const Homepage = () => {
     {newData}
   </div>)
 }
+
 
 export default Homepage
