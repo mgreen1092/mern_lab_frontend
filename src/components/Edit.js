@@ -10,7 +10,7 @@ const Edit = (props) => {
     const editHandler = async (event) => {
         event.preventDefault()
         //const sendEdit = props.input
-        const response = await axios.put(`http://localhost:4000/api/library/edit/${params.id}`, props.input)
+        const response = await axios.put(`https://mernlab.fly.dev/api/library/edit/${params.id}`, props.input)
         console.log(response)
     }
     const handleChange = async (event) => {

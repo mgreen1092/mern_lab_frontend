@@ -10,7 +10,7 @@ const Create = (props) => {
     }
     const handleSubmit = async (event) => {
         event.preventDefault()
-        const response = await axios.post('http://localhost:4000/api/library/create/', props.input)
+        const response = await axios.post('https://mernlab.fly.dev/api/library/create/', props.input)
         console.log(response)
     }
     return(

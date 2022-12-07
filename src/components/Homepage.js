@@ -8,7 +8,7 @@ const editButton = document.getElementById('edit')
 const Homepage = (props) => {
 
   const getBooks = () => {
-    axios.get("http://localhost:4000/api/library/").then(response => {
+    axios.get("https://mernlab.fly.dev/api/library/").then(response => {
       props.setAllBooks(response.data)
     })
   }
@@ -19,7 +19,7 @@ const Homepage = (props) => {
   if (props.allBooks === undefined) return;
 
   const deleteHandler =  (bookId) => {
-    const response =  axios.delete(`http://localhost:4000/api/library/delete/${bookId}`).then(response => {
+    const response =  axios.delete(`https://mernlab.fly.dev/api/library/delete/${bookId}`).then(response => {
       props.setAllBooks(response.data)
     })
   }
